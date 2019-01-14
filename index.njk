@@ -1,0 +1,69 @@
+{% block content %}
+
+
+   <div class="wrap">
+        {% for date, products in block | groupby("date" , "datefilter")  %} 
+        <div class="block">
+              <div class="date_block">
+                  <div class="date">  <i class="arrow up"></i><span>{{date}}</span></div>
+                  <div class="docs_date"><span>Документов: {{getCount(products)  }} ({{products | mysum |toRusMoney }} &#8381;) </span></div>
+              </div>
+        
+              <div class="docs_block" style="display: block;">
+         {% for id, products_by_doc in products | groupby('id') %}
+                   <div class="id_block" >
+                         <div class="docs"><p >{{products_by_doc[0].name |capitalize}} №{{id}} </p> <p>{{products_by_doc | mysum |toRusMoney}} &#8381; </p> </div>
+                         <div class="products_number"> <p class="id_name">Товаров: {{products_by_doc.length}}</p> </div>
+                 
+                         <div class="products_block" id="prod_stuff" style="display: none;">
+                                 {% for product in products_by_doc %}
+                                 <div class="products_item">
+                                         <div class="products_img"> <img src="{{product.image}}" alt="" onError="this.src='./no-photo.png'">
+                                          </div>
+                                         <div class="products_desc">
+                                             <p class="prod_text">{{product.item}}</p>
+                                             
+                                             <div class="desc_text">
+                                                  <p>{{product.quantity }} штук x {{ product.price |round()}}  &#8381;</p> 
+                                                  <p>{{ (product.quantity * product.price) |round(0) }} &#8381;</p>  
+                                             </div>
+                                            
+                                         </div>
+                                         
+                                 </div>
+                                
+                                 {% endfor %}
+                           </div>
+                 
+                     </div>
+                   
+                
+           
+               
+     
+         {% endfor %}
+             </div>
+         </div>
+         {% endfor %}
+
+
+   
+
+   
+
+
+
+
+   </div>
+        
+
+
+
+      
+
+
+
+
+{% endblock %}
+
+
