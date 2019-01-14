@@ -1,0 +1,2 @@
+SELECT docs.date , docTypes.name, docs.id , products.image, products.name as 'item' , products.price, rows.quantity, products.removed FROM docs , docTypes , products , rows WHERE docTypes.id = docs.typeId 
+AND docs.id = rows.docId AND rows.productId = products.id GROUP BY products.name HAVING products.removed = 0 ORDER BY date ASC;
